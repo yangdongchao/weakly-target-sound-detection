@@ -1,0 +1,46 @@
+# train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/train.h5
+# cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/validate.h5
+# test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/eval.h5
+train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/train_add_neg_final.h5
+cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/validate_add_neg_final.h5
+test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/eval_add_neg_final.h5
+spk_emb_file_path: /apdcephfs/share_1316500/donchaoyang/code2/data/embeddings/spk_embed.128.txt
+# 1(using label reverse), 2(no use label reverse)
+#s_student_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_S_student/S_student/2021-11-17_10-33-11_cb7a5d24474e11ec9c5d49fd3ce279e4/run_model_40_loss=-0.0423.pt
+stage2_path: /apdcephfs/share_1316500/donchaoyang/code2/exp_weakly/AudioSet_Stage2_bce/Stage2/2022-02-25_20-58-02_a9a3df1e963a11ecb1cbbdb9ea545fd7/run_model_22_loss=-0.2958.pt
+stage3_path: /apdcephfs/share_1316500/donchaoyang/code2/exp_weakly/AudioSet_Stage3_bce/Stage3/2022-03-01_18-26-03_1cdff1e0994a11ec8ea46bd10ce8953a/run_model_32_loss=-0.1978.pt
+batch_size: 256
+num_workers: 12
+data_args:
+    mode: stratified # Stratified split to train and cv
+optimizer: AdamW
+#label: /apdcephfs/share_1316500/donchaoyang/code2/data/weakly_data/strong_eval_for_weakly.tsv
+label: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/strong_and_weakly_eval_psds.tsv
+metadata: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/mata_eval_choose.tsv
+optimizer_args:
+    lr: 0.0001
+epochs: 100 
+model: Stage5
+model_args:
+    temppool: linear
+outputpath: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_stage5_bce
+transforms: [freqmask, timemask, shift]
+shuffle: False
+sampler: MinimumOccupancySampler
+loss: BCELoss
+loss_dis: KDLoss
+save: one
+early_stop: 7
+scheduler_args:
+    patience: 3
+    factor: 0.1
+scale: 4
+postprocessing: median
+thres: 0.5
+dtc_threshold: 0.7
+gtc_threshold: 0.7
+cttc_threshold: 0.3
+alpha_ct: 0.0
+alpha_st: 1
+max_efpr: 100
+experiment_description: In this experiment,we mainly test mutual learning, with stage3(S_student) help stage2 (W_student)

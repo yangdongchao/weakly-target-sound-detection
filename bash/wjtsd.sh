@@ -1,0 +1,2 @@
+python3 ./src/main_join_train.py train_evaluate runconfigs/w_target_sed_join_train.yaml
+#python3 ./src/main_join_train.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/experiments/Audioset_jtsd_attention_pool/Join_fusion/2021-10-28_00-37-10_20a8ddae374411ecba79cb2519d242df/

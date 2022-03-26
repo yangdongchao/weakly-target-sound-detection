@@ -1,0 +1,2 @@
+#python3 ./src/main_s_urban.py train_evaluate runconfigs/s_target_sed_urban.yaml
+python3 ./src/main_s_urban.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/Urban_S_student_0/S_student/2022-02-22_17-48-02_9e68f05893c411ec90674ba2d77ed1e6/

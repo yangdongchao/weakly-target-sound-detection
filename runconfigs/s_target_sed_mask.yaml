@@ -1,0 +1,42 @@
+train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_class_choose/strong_feature/train_additional.h5
+cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_class_choose/strong_feature/eval_additional.h5
+test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_class_choose/strong_feature/eval_additional.h5
+# train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/train_add_neg_final.h5
+# cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/validate_add_neg_final.h5
+# test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/eval_add_neg_final.h5
+spk_emb_file_path: /apdcephfs/share_1316500/donchaoyang/code2/data/embeddings/spk_embed.128.txt
+batch_size: 128
+num_workers: 12
+label_reverse: True
+data_args:
+    mode: stratified # Stratified split to train and cv
+optimizer: AdamW
+label: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_class_choose/filelist/strong_additional_eval_neg_psd.tsv
+#label: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/strong_and_weakly_eval_psds.tsv
+metadata: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/mata_eval_choose.tsv
+optimizer_args:
+    lr: 0.001
+epochs: 100 
+model: S_student_mask
+model_args:
+    temppool: linear
+outputpath: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_S_student_mask
+transforms: [freqmask, timemask, shift]
+shuffle: False
+sampler: MinimumOccupancySampler
+loss: FocalLoss_s
+save: one
+early_stop: 7
+scheduler_args:
+    patience: 3
+    factor: 0.1
+scale: 4
+postprocessing: median
+thres: 0.5
+dtc_threshold: 0.7
+gtc_threshold: 0.7
+cttc_threshold: 0.3
+alpha_ct: 0.0
+alpha_st: 1
+max_efpr: 100
+experiment_description: In this experiment,we mainly test S_student on large scale dataset and, we choose donot use label reverse (change the dataloader)

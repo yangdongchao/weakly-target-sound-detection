@@ -1,0 +1,2 @@
+#python3 ./src/main.py train_evaluate runconfigs/target_sed.yaml
+python3 ./src/main.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/2_neg_data_CNN14/CDur_CNN14/2021-12-05_21-45-12_a632037855d111ec87ec6524f9138030/

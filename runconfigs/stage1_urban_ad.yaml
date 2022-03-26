@@ -1,0 +1,45 @@
+# train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/train.h5
+# cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/validate.h5
+# test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/eval.h5
+train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_urban_sed/h5/train_urban_ad.h5
+cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_urban_sed/h5/validate_urban_ad.h5
+test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_urban_sed/h5/eval_urban_ad.h5
+spk_emb_file_urban_path: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_urban_sed/spk_embed.128.txt
+spk_emb_file_audioset_path: /apdcephfs/share_1316500/donchaoyang/code2/data/embeddings/spk_embed.128.txt
+s_student_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/Urban_S_student_ad_bce/S_student_ad/2022-03-05_10-14-03_fb7c63d49c2911ec9635d9a895e85513/run_model_24_loss=-0.4560.pt
+batch_size: 64
+num_workers: 12
+lambda_gan: 0.1
+data_args:
+    mode: stratified # Stratified split to train and cv
+optimizer: AdamW
+#label: /apdcephfs/share_1316500/donchaoyang/code2/data/weakly_data/strong_eval_for_weakly.tsv
+label: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_urban_sed/filelist/strong_urban_eval_neg_psd.tsv
+metadata: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_urban_sed/filelist/mata_urban_eval.tsv
+optimizer_args:
+    lr: 0.001
+epochs: 100 
+model: Stage1_ad
+model_args:
+    temppool: linear
+outputpath: /apdcephfs/share_1316500/donchaoyang/code2/exp_weakly/Urban_Stage1_ad_bce
+transforms: [freqmask, timemask, shift]
+shuffle: False
+sampler: MinimumOccupancySampler
+loss: BCELoss
+loss_dis: KDLoss
+save: one
+early_stop: 7
+scheduler_args:
+    patience: 3
+    factor: 0.1
+scale: 4
+postprocessing: median
+thres: 0.5
+dtc_threshold: 0.7
+gtc_threshold: 0.7
+cttc_threshold: 0.3
+alpha_ct: 0.0
+alpha_st: 1
+max_efpr: 100
+experiment_description: In this experiment,we mainly test add additional dataset in dataset on stage1 loss_sed + 5*loss_dis, we align alpha 0.65 weight for positive frame

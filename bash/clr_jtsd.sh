@@ -1,0 +1,2 @@
+#python3 ./src/main_join_train_clr.py train_evaluate runconfigs/target_sed_join_train_clr.yaml
+python3 ./src/main_join_train_clr.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/experiments/Audioset_jtsd_clr_with_label_nce_loss/Join_clr/2021-10-26_02-03-10_dcedf91e35bd11ec80f92de6f71cb003/

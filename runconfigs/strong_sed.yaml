@@ -1,0 +1,42 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Author  : Dongchao yang 
+# @File    : train.py
+train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature/train_no_choose.h5
+cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature/validate_no_choose.h5
+test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature/eval_no_choose.h5
+train_weak_label: /apdcephfs/share_1316500/donchaoyang/code2/data/filelist/weak_train_choose_split.tsv
+cv_weak_label: /apdcephfs/share_1316500/donchaoyang/code2/data/filelist/weak_validate_choose_split.tsv
+batch_size: 256
+num_workers: 16
+data_args:
+    mode: stratified # Stratified split to train and cv
+optimizer: AdamW
+label: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/strong_eval_choose.tsv
+metadata: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/mata_eval_choose.tsv
+optimizer_args:
+    lr: 0.001
+epochs: 100 
+model: AudioNet2
+model_args: #Currently None, no additional args
+    temppool: linear
+outputpath: /apdcephfs/share_1316500/donchaoyang/code2/experiments/AudioSet_sed
+transforms: [freqmask, timemask, shift]
+shuffle: False
+sampler: None
+loss: BCELoss
+save: one
+early_stop: 7
+scheduler_args:
+    patience: 3
+    factor: 0.1
+scale: 4
+postprocessing: median
+event_num: 192
+thres: 0.5
+dtc_threshold: 0.7
+gtc_threshold: 0.7
+cttc_threshold: 0.3
+alpha_ct: 0.0
+alpha_st: 1
+max_efpr: 100

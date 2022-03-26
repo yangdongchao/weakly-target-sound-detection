@@ -1,0 +1,2 @@
+#python3 ./src/main_s.py train_evaluate runconfigs/s_target_sed.yaml
+python3 ./src/main_s.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/exp_weakly/AudioSet_S_student_additional/S_student/2022-02-24_18-55-02_47a22418956011ec880549bf72e89b57/

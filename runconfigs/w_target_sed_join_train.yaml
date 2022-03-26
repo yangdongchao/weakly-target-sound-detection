@@ -1,0 +1,41 @@
+train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/train.h5
+cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/validate.h5
+test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/eval.h5
+spk_emb_file_path: /apdcephfs/share_1316500/donchaoyang/code2/data/embeddings/spk_embed.128.txt
+encoder_path: /apdcephfs/share_1316500/donchaoyang/code2/data/pre_train_model/ft_local/CNN14_emb128_mAP=0.412.pth
+CDur_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_wtsd_CDur_CNN14/CDur_CNN14/2021-11-04_10-38-11_51af604c3d1811ec98593defe146ec54/run_model_48_loss=-0.2466.pt
+batch_size: 128
+num_workers: 16
+data_args:
+    mode: stratified # Stratified split to train and cv
+optimizer: AdamW
+label: /apdcephfs/share_1316500/donchaoyang/code2/data/weakly_data/strong_eval_for_weakly.tsv
+metadata: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/mata_eval_choose.tsv
+optimizer_args:
+    lr: 0.0001
+epochs: 100 
+model: Join
+model_args: #Currently None, no additional args
+    temppool: linear
+outputpath: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/Audioset_wjtsd_focal_loss
+transforms: [freqmask, timemask, shift]
+shuffle: False
+sampler: MinimumOccupancySampler
+loss_sed: BCELoss
+loss_ce: CELoss
+save: one
+early_stop: 7
+scheduler_args:
+    patience: 3
+    factor: 0.1
+scale: 2
+postprocessing: median
+pre_train: True
+thres: 0.5
+dtc_threshold: 0.7
+gtc_threshold: 0.7
+cttc_threshold: 0.3
+alpha_ct: 0.0
+alpha_st: 1
+max_efpr: 100
+experiment_description: In this experiment,we mainly weakly join training, we align alpha 0.65 weight for positive frame

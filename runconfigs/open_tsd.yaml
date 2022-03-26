@@ -1,0 +1,28 @@
+train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_open/train_open_100.h5
+cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_open/validate_open_100.h5
+test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_open/eval_open_92.h5
+spk_emb_file_path: /apdcephfs/share_1316500/donchaoyang/code2/data/embeddings/spk_embed.128.txt
+batch_size: 280
+num_workers: 16
+data_args:
+    mode: stratified # Stratified split to train and cv
+optimizer: AdamW
+label: /apdcephfs/share_1316500/donchaoyang/code2/data/open_set/strong_eval_92.tsv
+optimizer_args:
+    lr: 0.001
+epochs: 100 
+model: CDur_CNN14
+model_args:
+    temppool: linear
+outputpath: /apdcephfs/share_1316500/donchaoyang/code2/experiments/AudioSet_tsd_open_set
+transforms: [freqmask, timemask, shift]
+shuffle: False
+sampler: MinimumOccupancySampler
+loss: BCELoss
+save: one
+early_stop: 7
+scheduler_args:
+    patience: 3
+    factor: 0.1
+scale: 4
+postprocessing: median

@@ -1,0 +1,2 @@
+#python3 src/main_stage4.py train_evaluate /apdcephfs/share_1316500/donchaoyang/code2/weakly_tsd/runconfigs/stage4.yaml
+python3 ./src/main_s_c.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_Stage6/Stage6/2021-12-20_11-59-12_2d6bec32614911ec976c9f8d64cce22a/

@@ -1,0 +1,2 @@
+#python3 ./src/main_simnet.py train_evaluate runconfigs/simnet.yaml
+python3 ./src/main_simnet.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_Train_simnet/Train_simnet/2021-11-22_20-23-11_0282d3024b8f11ec99ca451ef5cce69c/

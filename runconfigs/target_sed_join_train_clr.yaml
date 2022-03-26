@@ -1,0 +1,42 @@
+train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/train.h5
+cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/validate.h5
+test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/eval.h5
+spk_emb_file_path: /apdcephfs/share_1316500/donchaoyang/code2/data/embeddings/spk_embed.128.txt
+encoder_path: /apdcephfs/share_1316500/donchaoyang/code2/data/pre_train_model/ft_local/CNN14_emb128_mAP=0.412.pth
+CDur_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments/AudioSet_tsd/CDur_CNN14/2021-10-17_09-48-10_650978ce2eec11ec932db360582a71cf/run_model_17_loss=-0.3469.pt
+batch_size: 512
+num_workers: 16
+data_args:
+    mode: stratified # Stratified split to train and cv
+optimizer: AdamW
+label: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/strong_eval_choose.tsv
+metadata: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/mata_eval_choose.tsv
+optimizer_args:
+    lr: 0.0001
+epochs: 100 
+model: Join_clr
+model_args: #Currently None, no additional args
+    temppool: linear
+outputpath: /apdcephfs/share_1316500/donchaoyang/code2/experiments/Audioset_jtsd_clr_with_label_consin_loss
+transforms: [freqmask, timemask, shift]
+shuffle: False
+sampler: MinimumOccupancySampler
+loss_sed: FocalLoss
+loss_ce: CELoss
+loss_clr: SniCoLoss
+save: one
+early_stop: 7
+scheduler_args:
+    patience: 3
+    factor: 0.1
+scale: 2
+postprocessing: median
+pre_train: True
+thres: 0.5
+dtc_threshold: 0.7
+gtc_threshold: 0.7
+cttc_threshold: 0.3
+alpha_ct: 0.0
+alpha_st: 1
+max_efpr: 100
+experiment_description: In this experiment,we mainly test FocalLoss on join training with clr, we align alpha 0.65 weight for positive frame

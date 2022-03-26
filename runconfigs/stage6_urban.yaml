@@ -1,0 +1,50 @@
+# train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/train.h5
+# cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/validate.h5
+# test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_wtsd/eval.h5
+train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/train_add_neg_final.h5
+cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/validate_add_neg_final.h5
+test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/feature_tsd/eval_add_neg_final.h5
+# train_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_class_choose/strong_feature/train_additional.h5
+# cv_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_class_choose/strong_feature/eval_additional.h5
+# test_data: /apdcephfs/share_1316500/donchaoyang/code2/data/additional_class_choose/strong_feature/eval_additional.h5
+spk_emb_file_path: /apdcephfs/share_1316500/donchaoyang/code2/data/embeddings/spk_embed.128.txt
+s_student_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/Urban_S_student_ad/S_student_ad/2022-02-07_17-57-02_65708e0687fc11ec802687f568042ad4/run_model_34_loss=-0.0356.pt
+stage5_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_Stage5_urban/Stage5_urban/2022-02-13_09-47-02_d85655ce8c6e11ecb06807d545efee64/run_model_25_loss=-0.2908.pt
+#s_student_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_S_student/S_student/2021-11-17_10-33-11_cb7a5d24474e11ec9c5d49fd3ce279e4/run_model_40_loss=-0.0423.pt
+#stage2_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_Stage2_new/Stage2/2021-11-24_23-00-11_3dee45804d3711eca01a19c7b6082ccb/run_model_23_loss=-0.2937.pt
+stage3_path: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_Urban_stage3_ad/Stage3_ad/2022-02-10_23-39-02_92cfd6e48a8711ec9e8d592b5a1382db/run_model_33_loss=-0.0208.pt
+batch_size: 256
+num_workers: 12
+data_args:
+    mode: stratified # Stratified split to train and cv
+optimizer: AdamW
+#label: /apdcephfs/share_1316500/donchaoyang/code2/data/weakly_data/strong_eval_for_weakly.tsv
+#label: /apdcephfs/share_1316500/donchaoyang/code2/data/weakly_data/strong_eval_for_weakly.tsv
+label: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/strong_and_weakly_eval_psds.tsv
+metadata: /apdcephfs/share_1316500/donchaoyang/code2/data/choose_class/mata_eval_choose.tsv
+optimizer_args:
+    lr: 0.00001 # the lr is set 1e-4 or 1e-5?
+epochs: 100 
+model: Stage6_urban
+model_args:
+    temppool: linear
+outputpath: /apdcephfs/share_1316500/donchaoyang/code2/experiments_weakly/AudioSet_stage6_urban_1e5
+transforms: [freqmask, timemask, shift]
+shuffle: False
+sampler: MinimumOccupancySampler
+loss: FocalLoss_s
+save: one
+early_stop: 7
+scheduler_args:
+    patience: 3
+    factor: 0.1
+scale: 4
+postprocessing: median
+thres: 0.5
+dtc_threshold: 0.7
+gtc_threshold: 0.7
+cttc_threshold: 0.3
+alpha_ct: 0.0
+alpha_st: 1
+max_efpr: 100
+experiment_description: In this experiment,we mainly test add weakly dataset in dataset on stage6 ,now loss is Focal_loss_s,previous is BCE

@@ -1,0 +1,2 @@
+#python ./src/main_sed.py train_evaluate runconfigs/strong_sed.yaml
+python ./src/main_sed.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/experiments/AudioSet_sed/AudioNet2/2021-10-12_21-17-10_ca1090fe2b5e11ecb623d7db456b6e8f/

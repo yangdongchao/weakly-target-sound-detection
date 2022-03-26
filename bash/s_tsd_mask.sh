@@ -1,0 +1,2 @@
+python3 ./src/main_s_mask.py train_evaluate runconfigs/s_target_sed_mask.yaml
+#python3 ./src/main.py evaluate /apdcephfs/share_1316500/donchaoyang/code2/experiments/AudioSet_tsd_focal_loss/CDur_CNN14/2021-10-26_13-35-10_80c0d2f4361e11ecb051257e64c474ad/

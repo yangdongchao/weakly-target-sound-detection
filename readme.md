@@ -1,5 +1,5 @@
 # Inroduction
-This is the source code of our paper "A Two-student Learning Framework for Mixed Supervised Target Sound Detection" <br>
+This is the source code of our paper "A Two-student Learning Framework for Mixed Supervised Target Sound Detection"  The paper can be found on https://arxiv.org/pdf/2204.02088.pdf <br>
 # How to run it
 You can extract the feature according our code, or directly using our extracted feature (we will release it soon). Afther that you can directly run "bash bash/*.sh" .The different experiments can be choose from bash folder.
 # To do list
